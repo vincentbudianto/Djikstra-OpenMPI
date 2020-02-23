@@ -53,7 +53,7 @@ void dijkstra(int src, int V, int **graph, int *dist)
 }
 
 int main(int argc, char *argv[]) {
-    srand(time(NULL));
+    srand(13517020);
     if (argc != 2) {
         fprintf(stderr, "Usage: dijkstra <Number of nodes>\n");
         exit(1);
@@ -63,25 +63,24 @@ int main(int argc, char *argv[]) {
     int **matrix = (int **)malloc(nodes * sizeof(int*));
     for(int i = 0; i < nodes; i++) matrix[i] = (int *)malloc(nodes * sizeof(int));
     assert(matrix != NULL);
-
-    if (nodes < 10) {
-        printf("Current matrix:\n");
-        for (int i=0; i < nodes; i++) {
+    for (int i=0; i < nodes; i++) {
         for (int j=0; j < nodes; j++) {
             matrix[i][j] = rand() % 200;
-            if (matrix[i][j] > 100 || i == j)
-            . {
+            if (matrix[i][j] > 150 || i == j) {
                 matrix[i][j] = 0;
             }
         }
-        }
-        for (int i=0; i < nodes; i++) {
-        for (int j=0; j < nodes; j++) {
-            printf("%d ", matrix[i][j]);
-        }
-        printf("\n");
-        }
     }
+
+    // if (nodes < 10) {
+    //     printf("Current matrix:\n");
+    //     for (int i=0; i < nodes; i++) {
+    //     for (int j=0; j < nodes; j++) {
+    //         printf("%d ", matrix[i][j]);
+    //     }
+    //     printf("\n");
+    //     }
+    // }
 
     int **newmatrix = (int **)malloc(nodes * sizeof(int*));
     for(int i = 0; i < nodes; i++) newmatrix[i] = (int *)malloc(nodes * sizeof(int));
@@ -92,33 +91,71 @@ int main(int argc, char *argv[]) {
     MPI_Init(NULL,NULL);
     MPI_Comm_size(MPI_COMM_WORLD, &numtasks);
     MPI_Comm_rank(MPI_COMM_WORLD, &rank);
-    for (int i=rank; i < nodes; i+=numtasks) {
-        dijkstra(i, nodes, matrix, newmatrix[i]);
-        if (rank != 0){
-            MPI_Send(newmatrix[i], nodes, MPI_INT, 0, 1, MPI_COMM_WORLD);
-        }
-    }
-
-    // MPI_Barrier(MPI_COMM_WORLD);
-    if (rank == 0) {
-        for (int i=1; i < nodes && i < nodes; i++) {
-            if (i % numtasks != 0) {
-                MPI_Recv(newmatrix[i], nodes, MPI_INT, i%numtasks, 1, MPI_COMM_WORLD, &Stat);
+    if (numtasks > 1) {
+        int runners = numtasks-1;
+        if (rank != 0) {
+            for (int i=rank-1; i < nodes; i+=runners) {
+                dijkstra(i, nodes, matrix, newmatrix[i]);
+                // if (rank != 0){
+                MPI_Send(newmatrix[i], nodes, MPI_INT, 0, i, MPI_COMM_WORLD);
+                // printf("sending part %d from %d\n", i, rank);
+                // }
+                // if ((i - rank) % (nodes / 10) == 0) {
+                //     printf("process %d is %d percent done\n", rank, i-rank);
+                // }
             }
         }
-        clock_t end = clock();
-        if (nodes < 10) {
-            printf("New matrix:\n");
+        // For root process, accept matrix rows and print results
+        // MPI_Barrier(MPI_COMM_WORLD);
+        else {
+            for (int i=0; i < nodes; i++) {
+                MPI_Recv(newmatrix[i], nodes, MPI_INT, i%runners + 1, i, MPI_COMM_WORLD, &Stat);
+                // if (i % (nodes/10) == 0) {
+                //     printf("progress: %f percent done\n", nodes/i);
+                // }
+            }
+            clock_t end = clock();
+            if (nodes < 10) {
+                printf("New matrix:\n");
+                for (int i=0; i < nodes; i++) {
+                    for (int j=0; j < nodes; j++) {
+                        printf("%d ", newmatrix[i][j]);
+                    }
+                    printf("\n");
+                }
+            }
+            printf("Solution found in: %.3f ms\n", ((double)(end - begin) / CLOCKS_PER_SEC)) * 1000;
+
+            // Write to file
+            FILE *fp;
+            fp = fopen("begin.txt", "w");
+            fprintf(fp, "Old matrix:\n");
             for (int i=0; i < nodes; i++) {
                 for (int j=0; j < nodes; j++) {
-                    printf("%d ", newmatrix[i][j]);
+                    fprintf(fp, "%d ", matrix[i][j]);
                 }
-                printf("\n");
+                fprintf(fp, "\n");
             }
+            fclose(fp);
+
+            fp = fopen("result.txt", "w");
+            fprintf(fp, "New matrix:\n");
+            for (int i=0; i < nodes; i++) {
+                for (int j=0; j < nodes; j++) {
+                    fprintf(fp, "%d ", newmatrix[i][j]);
+                }
+                fprintf(fp, "\n");
+            }
+            fprintf(fp, "Solution found in: %.3f seconds\n", ((double)(end - begin) / CLOCKS_PER_SEC));
+            fclose(fp);
         }
-        printf("Solution found in: %.3f seconds\n", ((double)(end - begin) / CLOCKS_PER_SEC));
+    } else {
+        for (int i=0; i < nodes; i++) {
+            dijkstra(i, nodes, matrix, newmatrix[i]);
+        }
     }
 
+    MPI_Finalize();
 
     for (int i=0; i < nodes; i++) {
         free(matrix[i]);
@@ -128,5 +165,4 @@ int main(int argc, char *argv[]) {
         free(newmatrix[i]);
     }
     free(newmatrix);
-    MPI_Finalize();
 }
