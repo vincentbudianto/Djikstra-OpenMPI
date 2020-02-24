@@ -88,12 +88,12 @@ int main(int argc, char *argv[])
     else
     {
         // Inititate graph
-        int nodes = atoi(argv[1]);
-        int **matrix = (int **)malloc(nodes * sizeof(int *));
+        long nodes = atoi(argv[1]);
+        long **matrix = (long **)malloc(nodes * sizeof(long *));
 
         for (int i = 0; i < nodes; i++)
         {
-            matrix[i] = (int *)malloc(nodes * sizeof(int));
+            matrix[i] = (long *)malloc(nodes * sizeof(long));
         }
 
         assert(matrix != NULL);
@@ -114,11 +114,11 @@ int main(int argc, char *argv[])
             }
         }
 
-        int **newmatrix = (int **)malloc(nodes * sizeof(int *));
+        long **newmatrix = (long **)malloc(nodes * sizeof(long *));
 
         for (int i = 0; i < nodes; i++)
         {
-            newmatrix[i] = (int *)malloc(nodes * sizeof(int));
+            newmatrix[i] = (long *)malloc(nodes * sizeof(long));
         }
 
         // Dijkstra Algorithm
@@ -153,7 +153,7 @@ int main(int argc, char *argv[])
 
                 // Write to file
                 FILE *fp;
-                fp = fopen("old_matrix.txt", "w");
+                fp = fopen("~/out/old_matrix.txt", "w");
                 fprintf(fp, "Old matrix:\n");
 
                 for (int i = 0; i < nodes; i++)
@@ -168,7 +168,7 @@ int main(int argc, char *argv[])
 
                 fclose(fp);
 
-                fp = fopen("result.txt", "w");
+                fp = fopen("~/out/result.txt", "w");
                 fprintf(fp, "New matrix:\n");
 
                 for (int i = 0; i < nodes; i++)
@@ -197,7 +197,7 @@ int main(int argc, char *argv[])
 
             // Write to file
             FILE *fp;
-            fp = fopen("old_matrix.txt", "w");
+            fp = fopen("~/out/old_matrix.txt", "w");
             fprintf(fp, "Old matrix:\n");
 
             for (int i = 0; i < nodes; i++)
@@ -212,7 +212,7 @@ int main(int argc, char *argv[])
 
             fclose(fp);
 
-            fp = fopen("result.txt", "w");
+            fp = fopen("~/out/result.txt", "w");
             fprintf(fp, "New matrix:\n");
 
             for (int i = 0; i < nodes; i++)
