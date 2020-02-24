@@ -163,7 +163,7 @@ int main(int argc, char *argv[]) {
                 printf("\n");
             }
         }
-        printf("Solution found in: %.3f ms\n", ((double)(end - begin) / CLOCKS_PER_SEC) * 1000000);
+        printf("Solution found in: %.3f microseconds\n", ((double)(end - begin) / CLOCKS_PER_SEC) * 1000000);
 
         // Write to file
         FILE *fp;
@@ -185,7 +185,7 @@ int main(int argc, char *argv[]) {
             }
             fprintf(fp, "\n");
         }
-        fprintf(fp, "Solution found in: %.3f seconds\n", ((double)(end - begin) / CLOCKS_PER_SEC) * 1000000);
+        fprintf(fp, "Solution found in: %.3f microseconds\n", ((double)(end - begin) / CLOCKS_PER_SEC) * 1000000);
         fclose(fp);
     }
 
