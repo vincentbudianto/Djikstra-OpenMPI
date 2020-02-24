@@ -181,7 +181,7 @@ int main(int argc, char *argv[])
                     fprintf(fp, "\n");
                 }
 
-                fprintf(fp, "Solution found in: %.3f seconds\n", ((double)(end - begin) / CLOCKS_PER_SEC));
+                fprintf(fp, "Solution found in: %.3f microseconds\n", ((double)(end - begin) / CLOCKS_PER_SEC) * 1000000);
                 fclose(fp);
             }
         }
@@ -246,4 +246,5 @@ int main(int argc, char *argv[])
 
         free(newmatrix);
     }
+    return 0;
 }
