@@ -153,7 +153,7 @@ int main(int argc, char *argv[])
 
                 // Write to file
                 FILE *fp;
-                fp = fopen("out/old_matrix.txt", "w");
+                fp = fopen("old_matrix.txt", "w");
                 fprintf(fp, "Old matrix:\n");
 
                 for (int i = 0; i < nodes; i++)
@@ -168,7 +168,7 @@ int main(int argc, char *argv[])
 
                 fclose(fp);
 
-                fp = fopen("out/result.txt", "w");
+                fp = fopen("result.txt", "w");
                 fprintf(fp, "New matrix:\n");
 
                 for (int i = 0; i < nodes; i++)
@@ -197,7 +197,7 @@ int main(int argc, char *argv[])
 
             // Write to file
             FILE *fp;
-            fp = fopen("out/old_matrix.txt", "w");
+            fp = fopen("old_matrix.txt", "w");
             fprintf(fp, "Old matrix:\n");
 
             for (int i = 0; i < nodes; i++)
@@ -212,7 +212,7 @@ int main(int argc, char *argv[])
 
             fclose(fp);
 
-            fp = fopen("out/result.txt", "w");
+            fp = fopen("result.txt", "w");
             fprintf(fp, "New matrix:\n");
 
             for (int i = 0; i < nodes; i++)
