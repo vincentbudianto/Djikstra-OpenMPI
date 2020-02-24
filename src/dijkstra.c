@@ -153,6 +153,40 @@ int main(int argc, char *argv[]) {
         for (int i=0; i < nodes; i++) {
             dijkstra(i, nodes, matrix, newmatrix[i]);
         }
+        clock_t end = clock();
+        if (nodes < 10) {
+            printf("New matrix:\n");
+            for (int i=0; i < nodes; i++) {
+                for (int j=0; j < nodes; j++) {
+                    printf("%d ", newmatrix[i][j]);
+                }
+                printf("\n");
+            }
+        }
+        printf("Solution found in: %.3f ms\n", ((double)(end - begin) / CLOCKS_PER_SEC)) * 1000;
+
+        // Write to file
+        FILE *fp;
+        fp = fopen("begin.txt", "w");
+        fprintf(fp, "Old matrix:\n");
+        for (int i=0; i < nodes; i++) {
+            for (int j=0; j < nodes; j++) {
+                fprintf(fp, "%d ", matrix[i][j]);
+            }
+            fprintf(fp, "\n");
+        }
+        fclose(fp);
+
+        fp = fopen("result.txt", "w");
+        fprintf(fp, "New matrix:\n");
+        for (int i=0; i < nodes; i++) {
+            for (int j=0; j < nodes; j++) {
+                fprintf(fp, "%d ", newmatrix[i][j]);
+            }
+            fprintf(fp, "\n");
+        }
+        fprintf(fp, "Solution found in: %.3f seconds\n", ((double)(end - begin) / CLOCKS_PER_SEC));
+        fclose(fp);
     }
 
     MPI_Finalize();
