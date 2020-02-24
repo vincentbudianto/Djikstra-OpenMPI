@@ -246,4 +246,5 @@ int main(int argc, char *argv[])
 
         free(newmatrix);
     }
+    return 0;
 }
