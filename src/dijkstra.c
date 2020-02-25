@@ -7,7 +7,7 @@
 #include <assert.h>
 #include <time.h>
 
-int minDistance(int dist[], bool sptSet[], int V)
+int minDistance(long dist[], bool sptSet[], long V)
 {
     // Initialize min value
     int min = INT_MAX, min_index;
@@ -23,7 +23,7 @@ int minDistance(int dist[], bool sptSet[], int V)
     return min_index;
 }
 
-void dijkstra(int src, int V, int **graph, int *dist)
+void dijkstra(long src, long V, long **graph, long *dist)
 {
     // sptSet[i] will be true if vertex i is included in shortest path tree or shortest distance from src to i is finalized
     bool sptSet[V];
@@ -153,14 +153,14 @@ int main(int argc, char *argv[])
 
                 // Write to file
                 FILE *fp;
-                fp = fopen("~/out/old_matrix.txt", "w");
+                fp = fopen("old_matrix.txt", "w");
                 fprintf(fp, "Old matrix:\n");
 
                 for (int i = 0; i < nodes; i++)
                 {
                     for (int j = 0; j < nodes; j++)
                     {
-                        fprintf(fp, "%d ", matrix[i][j]);
+                        fprintf(fp, "%ld ", matrix[i][j]);
                     }
 
                     fprintf(fp, "\n");
@@ -168,14 +168,14 @@ int main(int argc, char *argv[])
 
                 fclose(fp);
 
-                fp = fopen("~/out/result.txt", "w");
+                fp = fopen("result.txt", "w");
                 fprintf(fp, "New matrix:\n");
 
                 for (int i = 0; i < nodes; i++)
                 {
                     for (int j = 0; j < nodes; j++)
                     {
-                        fprintf(fp, "%d ", newmatrix[i][j]);
+                        fprintf(fp, "%ld ", newmatrix[i][j]);
                     }
 
                     fprintf(fp, "\n");
@@ -197,14 +197,14 @@ int main(int argc, char *argv[])
 
             // Write to file
             FILE *fp;
-            fp = fopen("~/out/old_matrix.txt", "w");
+            fp = fopen("old_matrix.txt", "w");
             fprintf(fp, "Old matrix:\n");
 
             for (int i = 0; i < nodes; i++)
             {
                 for (int j = 0; j < nodes; j++)
                 {
-                    fprintf(fp, "%d ", matrix[i][j]);
+                    fprintf(fp, "%ld ", matrix[i][j]);
                 }
 
                 fprintf(fp, "\n");
@@ -212,14 +212,14 @@ int main(int argc, char *argv[])
 
             fclose(fp);
 
-            fp = fopen("~/out/result.txt", "w");
+            fp = fopen("result.txt", "w");
             fprintf(fp, "New matrix:\n");
 
             for (int i = 0; i < nodes; i++)
             {
                 for (int j = 0; j < nodes; j++)
                 {
-                    fprintf(fp, "%d ", newmatrix[i][j]);
+                    fprintf(fp, "%ld ", newmatrix[i][j]);
                 }
 
                 fprintf(fp, "\n");
