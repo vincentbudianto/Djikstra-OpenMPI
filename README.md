@@ -83,7 +83,7 @@ Cara kerja program:
 ### Analisis Perbandingan Kinerja Serial dan Paralel
 Algoritma dijkstra yang dijalankan secara serial memakan waktu jauh lebih lama dibandingkan algoritma dijkstra yang dijalankan secara paralel dengan menggunakan *thread* lebih dari 2 karena pembagian data yang diproses oleh setiap thread berkurang cukup banyak seiring dengan bertambahnya jumlah *thread* yang digunakan. Tetapi khusus untuk algoritma dijkstra yang dijalankan secara paralel menggunakan 2 *thread*, waktu yang dibutuhkan lebih lama dibandingkan algoritma  dijkstra yang dijalankan secara serial karena jumlah data yang diproses oleh satu *thread* sama dengan jumlah data yang diproses secara serial (*main thread* bertugas hanya untuk menerima hasil dari *thread* lain) dan membutuhkan waktu untuk mengirimkan hasil dari *thread* yang memroses data ke *main thread*.
 
-| Jumlah Thread | Jumlah Data yang Diproses 1 Thread | Perkiraan Wakt u yang Dibutuhkan                 |
+| Jumlah Thread | Jumlah Data yang Diproses 1 Thread | Perkiraan Waktu yang Dibutuhkan                  |
 |:-------------:|:----------------------------------:|:------------------------------------------------:|
 |    1 (Serial) |                            $$ N $$ |                               $$ T_{dijkstra} $$ |
 |   2 (Paralel) |                            $$ N $$ |            $$ T_{dijkstra} + T_{send-receive} $$ |
